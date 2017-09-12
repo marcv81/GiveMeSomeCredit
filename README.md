@@ -98,6 +98,10 @@ There are some obvious outliers. For instance one person has 43 dependents and a
 
 The values 96 and 98 are used repeatedly in the 3 features representing the number of times a payment was late. The number of such occurrences indicates it is unlikely to be a mistake. It might instead be a code. However a model might learn from such values, because although incorrect they are consistent. We hence left them unchanged.
 
+## Feature engineering
+
+We could not engineer any new useful feature. Because the 3 features representing the number of times a payment was late are linearly correlated we tried to sum them up. When taken independently the total number of times a payment was late (regardless of the number of days) is a strong linear predictor of delinquency. However adding this new feature to a model did not lead to improved predictions.
+
 ## Model
 
 ### Score
