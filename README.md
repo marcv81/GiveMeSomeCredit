@@ -2,6 +2,8 @@
 
 ## Problem
 
+https://www.kaggle.com/c/GiveMeSomeCredit
+
 This is a supervised learning regression problem.
 
 ## Datasets
@@ -96,6 +98,57 @@ There are some obvious outliers. For instance one person has 43 dependents and a
 
 The values 96 and 98 are used repeatedly in the 3 features representing the number of times a payment was late. The number of such occurrences indicates it is unlikely to be a mistake. It might instead be a code. However a model might learn from such values, because although incorrect they are consistent. We hence left them unchanged.
 
+## Model
+
+### Score
+
+We used K-fold cross-validation on the training dataset to estimate the area under ROC curve of models. This allows us to estimate the Kaggle score without submitting repeatedly. For this challenge the submissions are limited to 2 per day.
+
+### Model type
+
+Based on the analysis above we used a gradient boosting regressor. The main advantages are listed below.
+
+- Few assumptions on the data to fit
+  - No need to follow specific distribution laws
+  - No need for scaling or shifting
+  - No issue with correlated features
+- Learns fast
+- Performs well in practice
+
+The estimated area under ROC curve for the initial model is 0.8640.
+
+### Tuning
+
+We used a grid search to tune the following model hyperparameters: max_depth=4, n_estimators=130. Other hyperparameters did not yield significant improvements.
+
+The estimated area under ROC curve is now 0.8649.
+
+### Variance reduction
+
+Gradient boosting reduces the error bias but might increase the variance. In order to reduce the variance we used bootstrap aggregation on the tuned gradient boosting regressors.
+
+The estimated area under ROC curve is now 0.8654.
+
+### Tuning
+
+We tuned the following bootstrap aggregation regressor hyperparameter: n_estimators=30.
+
+The estimated area under ROC curve is now 0.8656
+
+## Submission
+
+We submitted the prediction from our last model to Kaggle.
+
+### Private leaderboard
+
+- Score: 0.868039
+- Rank: 58
+
+### Public leaderboard
+
+- Score: 0.861483
+- Rank: 89
+
 # Code
 
 ## Setup
@@ -113,3 +166,9 @@ Generate the plots.
 List the correlation coefficients.
 
     python3 correlation.py
+
+Evaluate the model and generate a submission.
+
+    python3 model.py
+
+If generated again the submission will be different due to randomization in the learning algorithm. The performance should however be comparable.
