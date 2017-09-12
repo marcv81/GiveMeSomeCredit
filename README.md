@@ -155,6 +155,8 @@ We submitted the prediction from our last model to Kaggle.
 
 # Code
 
+Tested on Debian Stretch.
+
 ## Setup
 
     virtualenv -p python3 venv
