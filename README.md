@@ -84,6 +84,18 @@ We analyzed the Pearson and Spearman correlations between the features. There ar
     0.27711062963 SeriousDlqin2yrs x NumberOfTime60-89DaysPastDueNotWorse
     0.257411003285 SeriousDlqin2yrs x NumberOfTime30-59DaysPastDueNotWorse
 
+## Data clean-up
+
+### Missing data
+
+There is missing data for two features: income and number of dependents. We filled in the missing data with -1. The replacement value is arbitrary, but outside the normal range for each feature. This is so that a model might learn from the fact the values were missing, even if we don't know the reason.
+
+### Outliers
+
+There are some obvious outliers. For instance one person has 43 dependents and another is 0 year old. There are however very few such cases, and we judged them not worth repairing given the datasets sizes.
+
+The values 96 and 98 are used repeatedly in the 3 features representing the number of times a payment was late. The number of such occurrences indicates it is unlikely to be a mistake. It might instead be a code. However a model might learn from such values, because although incorrect they are consistent. We hence left them unchanged.
+
 # Code
 
 ## Setup
